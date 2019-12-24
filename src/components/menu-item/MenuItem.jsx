@@ -16,7 +16,6 @@ const MenuItem = ({title, imageUrl, size, history, linkUrl, match}) => (
       <div className='title'>{title.toUpperCase()}</div>
       <span className='subtitle'>SHOP NOW</span>
     </div>
-    <button onClick={() => console.log(match)}>test</button>
   </div>
 )
 
