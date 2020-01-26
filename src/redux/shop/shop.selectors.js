@@ -17,5 +17,3 @@ export const selectCollection = collectionURLParam =>
     [selectCollections],
     collections => collections[collectionURLParam]
   )
-
-// export default selectCollections
