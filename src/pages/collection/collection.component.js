@@ -1,7 +1,6 @@
 import React from 'react'
 
 import CollectionItem from '../../components/CollectionItem/CollectionItem'
-import WithSpinner from '../../components/with-spinner/WithSpinner'
 
 import { connect } from 'react-redux'
 import { selectCollection } from '../../redux/shop/shop.selectors'
@@ -9,6 +8,7 @@ import { selectCollection } from '../../redux/shop/shop.selectors'
 import './collection.scss'
 
 const CollectionPage = ( { collection, ownProps } ) => {
+
   const { title, items } = collection
 
   return (
