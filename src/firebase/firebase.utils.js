@@ -38,7 +38,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
       console.log('error creating user', error.message)
     }
   }
-
   return userRef
 
 }
@@ -77,15 +76,25 @@ export const convertCollectionsSnapshotToMap = (collections) => {
 
 firebase.initializeApp(config)
 
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe()
+      resolve(userAuth)
+    }, reject)
+  })
+}
+
 //have access to this do to import auth
 export const auth = firebase.auth()
 export const firestore = firebase.firestore()
 
-const provider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+
 
 //want to always trigger google popup whenever we use google auth provider
-provider.setCustomParameters({prompt: 'select_account'});
+//googleProvider.setCustomParameters({prompt: 'select_account'});
 
-export const signInWithGoogle = () => auth.signInWithPopup(provider)
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider)
 
 export default firebase;

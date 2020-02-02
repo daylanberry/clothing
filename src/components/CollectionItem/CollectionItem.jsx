@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { addItem } from '../../redux/cart/cart.actions'
 
 import './CollectionItem.scss'
+import { withRouter, Route } from 'react-router-dom'
 
 import CustomButton from '../custom-button/CustomButton.jsx'
 
-const CollectionItem = ({item, addItem }) => {
-  const { imageUrl, name, price } = item
-
+const CollectionItem = ({item, addItem}) => {
+  const { imageUrl, name, price, id} = item
   return (
   <div className='collection-item'>
     <div
@@ -32,4 +32,4 @@ const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item))
 })
 
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default withRouter(connect(null, mapDispatchToProps)(CollectionItem));

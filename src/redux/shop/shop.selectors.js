@@ -25,11 +25,5 @@ export const selectIsCollectionFetching = createSelector(
 
 export const selectIsCollectionLoaded = createSelector(
   [shopInput],
-  (shop) => {
-    if (!!shop.collections) {
-      return true
-    } else {
-      return false
-    }
-  }
+  (shop) => !!shop.collections ? true : false
 )
