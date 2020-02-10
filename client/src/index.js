@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store.js';
 
 import { PersistGate } from 'redux-persist/integration/react'
+import * as serviceWorker from './serviceWorker'
 
 
 ReactDOM.render(
@@ -22,6 +23,8 @@ ReactDOM.render(
     </BrowserRouter>
   </Provider>,
   document.getElementById('root'));
+
+  serviceWorker.register()
 
 
 //this gives anything between the Browser Router (App), all the functionality of routing.
