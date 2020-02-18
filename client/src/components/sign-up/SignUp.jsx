@@ -22,7 +22,7 @@ const SignUp = ({ signupStart }) => {
       return;
     }
 
-    const { signupStart } = this.props
+    // const { signupStart } = this.props
 
     signupStart({displayName, email, password})
     // try {

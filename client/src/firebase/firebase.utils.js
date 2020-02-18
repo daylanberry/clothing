@@ -30,6 +30,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         displayName,
         email,
         createdAt,
+        items: [],
         ...additionalData
 
       })
@@ -41,6 +42,21 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef
 
 }
+
+export const getUserCartRef = async (id) => {
+  const cartsRef = firestore.collection('carts').where('id', '==', id)
+  const snapShot = await cartsRef.get();
+
+  if (snapShot.empty) {
+    const cartDocRef = firestore.collection('carts').doc();
+    await cartDocRef.set({id, cartItems: []});
+    return cartDocRef;
+  } else {
+    return snapShot.docs[0].ref
+  }
+}
+
+
 
 export const addCollectionAndDocuments = (collectionKey, objectsToAdd) => {
   const collectionRef = firestore.collection(collectionKey);
@@ -58,7 +74,6 @@ export const addCollectionAndDocuments = (collectionKey, objectsToAdd) => {
 export const convertCollectionsSnapshotToMap = (collections) => {
   const transformed = collections.docs.map(doc => {
     const { title, items } = doc.data();
-
     return {
       routeName: encodeURI(title.toLowerCase()),
       id: doc.id,

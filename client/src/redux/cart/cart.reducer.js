@@ -6,7 +6,8 @@ import { addItemToCart, removeItemFromCart } from './cart.utils.js'
 
 const INITIAL_STATE = {
   hidden: true,
-  cartItems: []
+  cartItems: [],
+  error: null
 }
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -20,6 +21,12 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload)
+      }
+
+    case CartActionTypes.ADD_ITEM_FAILURE:
+      return {
+        ...state,
+        error: action.payload
       }
 
     case CartActionTypes.CLEAR_ITEM_FROM_CART:
@@ -38,6 +45,12 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         return {
           ...state,
           cartItems: []
+        }
+
+      case CartActionTypes.SET_CART_FROM_FIREBASE:
+        return {
+          ...state,
+          cartItems: action.payload
         }
 
     default:

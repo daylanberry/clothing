@@ -50,4 +50,5 @@ export const OptionLink = styled(Link)`
 export const OptionDiv = styled.div`
 padding: 10px 15px;
 cursor: pointer;
+color: 'white';
 `

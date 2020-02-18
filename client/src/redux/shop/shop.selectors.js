@@ -15,7 +15,12 @@ export const selectCollectionsForPreview = createSelector(
 export const selectCollection = collectionURLParam =>
   createSelector(
   [selectCollections],
-  collections => collections ? collections[collectionURLParam] : null
+  collections => collections ? collections[`${collectionURLParam}`] : null
+)
+
+export const womenCollection = createSelector(
+  [selectCollection],
+  (collection) => collection.filter(item => item.gender === 'women')
 )
 
 export const selectIsCollectionFetching = createSelector(
