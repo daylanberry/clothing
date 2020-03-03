@@ -12,3 +12,13 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 600px) {
+  .sign-in {
+    width: 330px;
+  }
+
+  .buttons {
+    width: 10px;
+  }
+}
