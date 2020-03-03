@@ -8,8 +8,7 @@
 @media screen and (max-width: 600px) {
   .sign-in-and-sign-up {
     width: 550px;
-    display: flex;
-    justify-content: space-between;
+    display: block;
     margin: 30px auto;
   }
 }
