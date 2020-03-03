@@ -6,7 +6,6 @@ import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from 
 
 import axios from 'axios'
 import { ChatManager, TokenProvider} from '@pusher/chatkit-client'
-import keys from '../../keys.js'
 
 const createUser = (user) => {
   axios.post('/users', {
