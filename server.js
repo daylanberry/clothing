@@ -4,6 +4,8 @@ const bodyParser =  require('body-parser')
 const path = require('path');
 const compression = require('compression')
 const enforce = require('express-sslify')
+const Chatkit = require('@pusher/chatkit-server')
+require('dotenv').config()
 
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config()
@@ -51,6 +53,45 @@ app.post('/payment', (req, res) => {
 app.get('/service-worker.js', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'service-worker.js'))
 })
+
+
+const chatkit = new Chatkit.default({
+  instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
+  key: process.env.CHATKIT_SECRET_KEY,
+});
+
+
+
+app.post('/users', (req, res) => {
+  const { username } = req.body;
+
+  chatkit.createUser({
+    id: username,
+    name: username
+  })
+  .then(() => {
+    res.sendStatus(201)
+  })
+  .catch(err => {
+    if (err.error === 'services/chatkit/user_already_exists') {
+      console.log(`User already exists: ${username}`);
+      res.sendStatus(200);
+    } else {
+      res.status(err.status).json(err);
+    }
+  })
+})
+
+
+
+app.post('/authenticate', (req, res) => {
+  const authData = chatkit.authenticate({
+    userId: req.query.user_id,
+  });
+  res.status(authData.status).send(authData.body);
+});
+
+
 
 app.listen(port, error => {
   if (error) throw error;

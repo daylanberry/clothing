@@ -4,11 +4,25 @@ import userActionTypes from './user.types'
 
 import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from '../../firebase/firebase.utils'
 
+import axios from 'axios'
+import { ChatManager, TokenProvider} from '@pusher/chatkit-client'
+import keys from '../../keys.js'
+
+const createUser = (user) => {
+  axios.post('/users', {
+    username: user
+  })
+  .then(res => console.log(res))
+  .catch(err => console.log(err))
+}
+
 
 function* getSnapshopFromUserAuth(userAuth, additionalData) {
   try {
     const userRef = yield call(createUserProfileDocument, userAuth, additionalData)
     const snapshot = yield userRef.get()
+    const displayName = snapshot.data().displayName
+    yield createUser(displayName)
 
     yield put(signInSuccess({id: snapshot.id, ...snapshot.data()}))
   } catch(error) {

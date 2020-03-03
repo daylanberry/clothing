@@ -5,6 +5,7 @@ import directoryReducer from './directory/directory.reducer'
 import cartReducer from './cart/cart.reducer.js'
 import shopReducer from './shop/shop.reducer'
 import genderOptionReducer from './gender-options/gender-option.reducer'
+import chatReducer from './chat/chat.reducer'
 
 import { persistReducer } from 'redux-persist'
 
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   directory: directoryReducer,
   shop: shopReducer,
-  genderOptions: genderOptionReducer
+  genderOptions: genderOptionReducer,
+  chat: chatReducer
 })
 
 

@@ -1,0 +1,47 @@
+.container {
+
+  ul.list {
+
+    list-style: none;
+    padding-left: 1px;
+
+    .list-obj {
+
+      .self{
+        font-weight: bold;
+        text-align: right;
+        padding-right: 10px;
+        display: hidden;
+      }
+
+      .other-user {
+        text-align: left;
+        padding-right: 10px;
+        font-weight: bold;
+      }
+
+      .message {
+        font-size: 15px;
+        color: black;
+        background-color: lightblue;
+        border-radius: 25px;
+        padding-left: 8px;
+        margin-top: 5px;
+        margin-left: 60px;
+        text-align: left;
+      }
+
+      .other {
+        font-size: 15px;
+        color: black;
+        background-color: grey;
+        border-radius: 25px;
+        padding-left: 8px;
+        margin-top: 5px;
+        margin-right: 60px;
+        text-align: left;
+      }
+    }
+  }
+
+}

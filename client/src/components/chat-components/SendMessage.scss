@@ -1,0 +1,48 @@
+form {
+  background-color: #E51670;
+  border-top: none;
+
+  .enter-text {
+    width: 265px;
+    border: none;
+    bottom: 4px;
+    right: 4px;
+    position: relative;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+  .send-message {
+    width: 35px;
+    height: 22px;
+    padding-top: 2px;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+
+  form {
+    background-color: #E51670;
+    border-top: none;
+    width: 250px;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+
+    .enter-text {
+      width: 130px;
+      bottom: 4px;
+      right: 4px;
+      position: relative;
+      border-bottom: 1px solid black;
+      background-color: white;
+      border-radius: 10px;
+      border: 1px solid black;
+    }
+    .send-message {
+      width: 36px;
+      height: 22px;
+      padding-top: 2px;
+    }
+  }
+}
