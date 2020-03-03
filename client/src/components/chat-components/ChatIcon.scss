@@ -1,9 +1,18 @@
 .chat {
   padding: 10px 1px;
-  top: 300px;
+  top: 150px;
   position: relative;
   width: 100px;
   height: 100px;
   text-align: right;
+  cursor: pointer;
+}
 
+@media screen and (max-width: 600px) {
+  padding: 10px 1px;
+  top: 70px;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  text-align: right;
 }
