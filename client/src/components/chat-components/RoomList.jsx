@@ -14,7 +14,6 @@ class RoomList extends React.Component {
   render() {
 
     const orderedRooms = [...this.props.rooms].sort((a, b) => parseInt(a.createdAt) - parseInt(b.createdAt))
-    console.log(orderedRooms)
 
     return (
       <div className='room-container'>
@@ -31,7 +30,7 @@ class RoomList extends React.Component {
                     this.props.subscribeToRoom(room.id)
                     this.setState({
                       roomId: room.id
-                    }, () => console.log(this.state))
+                    })
                   }}
                   className={'room ' + active}>#{room.name}</a>
                 </li>
