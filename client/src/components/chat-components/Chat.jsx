@@ -28,7 +28,7 @@ const Chat = ({toggleHidden, user}) => {
         displayName = user.email
       }
 
-      socket = socketIOClient(ENDPOINT)
+      socket = socketIOClient('/')
 
       socket.emit('join', { user: displayName, room })
       setCurrentUser(displayName)
