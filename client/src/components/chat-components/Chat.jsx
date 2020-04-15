@@ -11,7 +11,7 @@ import socketIOClient from 'socket.io-client'
 import axios from 'axios'
 
 var socket;
-const ENDPOINT = 'ws://localhost:5002'
+const ENDPOINT = process.env.NODE_ENV === 'development' ? 'ws://localhost:5002' : 'ws://dayclothing.herokuapp.com/'
 
 
 const Chat = ({toggleHidden, user}) => {
@@ -55,8 +55,6 @@ const Chat = ({toggleHidden, user}) => {
       socket.on('updateMessages', (messages) => {
         setMessages(messages)
       })
-
-
 
     }, [messages, room, socket])
 
