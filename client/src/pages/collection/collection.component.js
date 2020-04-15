@@ -13,6 +13,7 @@ const CollectionPage = ( { collection, ownProps, match } ) => {
   const { title, items } = collection
   const gender = match.path.includes('womens') ? 'womens' : 'mens'
   const filteredItems = match.path.includes('womens') ? items.filter(item => item.gender === 'womens') : items.filter(item => item.gender === 'mens')
+  console.log(ownProps)
 
     return (
       <div className='collection-page'>

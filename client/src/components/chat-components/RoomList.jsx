@@ -1,47 +1,29 @@
 import React from 'react'
 import './RoomList.scss'
 
-class RoomList extends React.Component {
-  constructor(props) {
-    super(props)
+const RoomList = ({currentRoom, rooms, changeRooms}) => {
 
-    this.state = {
-      roomId: ''
-    }
-  }
+  return (
+    <div className='room-container'>
+      <h3>Rooms</h3>
+      <ul>
+        {
+          rooms.map((room, i) => {
+            return (
+              <li className={'room'} key={i}>
+                <a
+                onClick={() => {
+                  changeRooms(room)
+                }}
+                className={room === currentRoom ? 'room active':'room'}>#{room}</a>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </div>
+  )
 
-
-  render() {
-
-    const orderedRooms = [...this.props.rooms].sort((a, b) => parseInt(a.createdAt) - parseInt(b.createdAt))
-
-    return (
-      <div className='room-container'>
-        <h3>Rooms</h3>
-        <ul>
-          {
-            orderedRooms.map(room => {
-              const active = room.id === this.state.roomId ? 'active' : ''
-
-              return (
-                <li className={'room ' + active} key={room.id}>
-                  <a
-                  onClick={() => {
-                    this.props.subscribeToRoom(room.id)
-                    this.setState({
-                      roomId: room.id
-                    })
-                  }}
-                  className={'room ' + active}>#{room.name}</a>
-                </li>
-              )
-            })
-          }
-
-        </ul>
-      </div>
-    )
-  }
 }
 
 export default RoomList

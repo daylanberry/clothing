@@ -5,7 +5,6 @@ import userActionTypes from './user.types'
 import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from '../../firebase/firebase.utils'
 
 import axios from 'axios'
-import { ChatManager, TokenProvider} from '@pusher/chatkit-client'
 
 const createUser = (user) => {
   axios.post('/users', {

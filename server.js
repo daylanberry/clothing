@@ -4,22 +4,39 @@ const bodyParser =  require('body-parser')
 const path = require('path');
 const compression = require('compression')
 const enforce = require('express-sslify')
-const Chatkit = require('@pusher/chatkit-server')
+const app = express();
 require('dotenv').config()
+
+const port = process.env.PORT || 5002
+const socketio = require('socket.io')
+const server = require('http').createServer(app)
+const io = socketio(server)
+const { addUser, removeUser, getUser, getUsersInRoom, addMessage, rooms } = require('./users.js')
 
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
-const app = express();
-
-const port = process.env.PORT || 5000
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use(cors())
+// app.use(cors())
+app.use(function (req, res, next) {
+
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+
+  next();
+})
+
 
 if (process.env.NODE_ENV === 'production') {
   app.use(compression())
@@ -55,45 +72,42 @@ app.get('/service-worker.js', (req, res) => {
 })
 
 
-const chatkit = new Chatkit.default({
-  instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
-  key: process.env.CHATKIT_SECRET_KEY,
-});
 
 
 
-app.post('/users', (req, res) => {
-  const { username } = req.body;
+io.on('connection', (socket) => {
 
-  chatkit.createUser({
-    id: username,
-    name: username
+  socket.on('join', ({user, room}) => {
+    const messages = rooms[room]
+
+    const roomToLeave = Object.keys(socket.rooms)[1]
+    socket.leave(roomToLeave)
+    // const userObj = addUser({id: socket.id, name: user, room })
+    socket.emit('updateMessages', messages)
+
+    socket.join(room)
+
+
   })
-  .then(() => {
-    res.sendStatus(201)
+
+  socket.on('update', (messages) => {
+    const cur = Object.keys(socket.rooms)[1]
+    rooms[cur] = messages
+    socket.emit('updateMessages', rooms[cur])
   })
-  .catch(err => {
-    if (err.error === 'services/chatkit/user_already_exists') {
-      console.log(`User already exists: ${username}`);
-      res.sendStatus(200);
-    } else {
-      res.status(err.status).json(err);
-    }
+
+
+  socket.on('sendMessageToServer', ({newMessage, room}) => {
+    const currentRoom = Object.keys(socket.rooms)[1]
+    const messages = addMessage(newMessage, currentRoom)
+    socket.to(currentRoom).emit(room, messages)
+  })
+
+
+  socket.on('diconnect', () => {
+    console.log('disconnected')
+    removeUser(socket.id)
   })
 })
 
-
-
-app.post('/authenticate', (req, res) => {
-  const authData = chatkit.authenticate({
-    userId: req.query.user_id,
-  });
-  res.status(authData.status).send(authData.body);
-});
-
-
-
-app.listen(port, error => {
-  if (error) throw error;
-  console.log('running on port ' + port)
-})
+server.listen(port, () => 'connected to port ' + port)

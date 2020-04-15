@@ -4,16 +4,14 @@ import './SendMessage.scss'
 
 const SendMessage = ({send}) => {
 
-  const [message, writeMessage] = useState('')
+  const [message, setMessage] = useState('')
 
-  const inputHandler = (e) => {
-    writeMessage(e.target.value)
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (message.length) send(message)
-    writeMessage('')
+    send(message)
+    setMessage('')
+
   }
 
     return (
@@ -21,9 +19,9 @@ const SendMessage = ({send}) => {
         <form onSubmit={handleSubmit}>
           <input
             placeholder='Chat!'
-            onChange={inputHandler}
-            value={message}
             className='enter-text'
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
           <Send className='send-message' onClick={handleSubmit}/>
         </form>
