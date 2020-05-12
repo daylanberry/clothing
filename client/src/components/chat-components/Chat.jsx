@@ -11,7 +11,7 @@ import socketIOClient from 'socket.io-client'
 import axios from 'axios'
 
 var socket;
-const ENDPOINT = process.env.NODE_ENV === 'development' ? 'ws://localhost:5002' : 'ws://dayclothing.herokuapp.com/'
+const ENDPOINT = process.env.NODE_ENV === 'development' ? 'ws://localhost:5002' : '/'
 
 
 const Chat = ({toggleHidden, user}) => {
@@ -28,7 +28,7 @@ const Chat = ({toggleHidden, user}) => {
         displayName = user.email
       }
 
-      socket = socketIOClient('/')
+      socket = socketIOClient(ENDPOINT)
 
       socket.emit('join', { user: displayName, room })
       setCurrentUser(displayName)

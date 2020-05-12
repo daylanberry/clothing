@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
 
     const roomToLeave = Object.keys(socket.rooms)[1]
     socket.leave(roomToLeave)
-    // const userObj = addUser({id: socket.id, name: user, room })
+
     socket.emit('updateMessages', messages)
 
     socket.join(room)

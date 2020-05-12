@@ -6,21 +6,12 @@ import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from 
 
 import axios from 'axios'
 
-const createUser = (user) => {
-  axios.post('/users', {
-    username: user
-  })
-  .then(res => console.log(res))
-  .catch(err => console.log(err))
-}
-
 
 function* getSnapshopFromUserAuth(userAuth, additionalData) {
   try {
     const userRef = yield call(createUserProfileDocument, userAuth, additionalData)
     const snapshot = yield userRef.get()
     const displayName = snapshot.data().displayName
-    yield createUser(displayName)
 
     yield put(signInSuccess({id: snapshot.id, ...snapshot.data()}))
   } catch(error) {
